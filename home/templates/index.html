@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,36 +35,11 @@
             border-radius: 5px;
         }
 
-        .form-group textarea {
-            height: 100px;
-        }
-
-        /* Apply styles to the skills input elements */
-        .om {
-            width: 100%;
-            padding: 10px 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .ed {
-            width: 100%;
-            padding: 10px 20px;
-            display: flex;
-            gap: 4%;
-        }
-
-        .com {
-            width: 80%;
-            padding: 5px 20px;
-            display: flex;
-            gap: 7%;
-
-        }
-
-        .op {
-            margin: 10px;
-
+        .dynamic-section {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
         }
 
         .btn1 {
@@ -71,30 +49,25 @@
             font-weight: bold;
             background-color: rgb(35, 144, 208);
             border-radius: 10px;
+            cursor: pointer;
         }
-
-        /* You can add more styles as needed */
     </style>
 </head>
 
 <body>
-    <h1 style="text-align: center; color:green; font-size:40px; ">Resumebuilder</h1>
+    <h1 style="text-align: center; color: green; font-size: 40px;">Resume Builder</h1>
 
     <form action="{% url 'resume' %}" method="post">
         {% csrf_token %}
-
-
-        <!-- ===================PERSONAL INFORMATION====================== -->
-
         <div class="form-container">
             <h2>Personal Information</h2>
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name">
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="name">About:</label>
-                <input type="text" id="name" name="about">
+                <label for="about">About:</label>
+                <input type="text" id="about" name="about">
             </div>
             <div class="form-group">
                 <label for="age">Age:</label>
@@ -102,203 +75,164 @@
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="text" id="email" name="email">
+                <input type="text" id="email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="phone">Phone:</label>
                 <input type="text" id="phone" name="phone">
             </div>
-            <div class="form-group ">
+            <div class="form-group">
                 <label for="skills">Skills:</label>
-                <div class="om">
-                    <input type="text" id="skills" name="skill1">
-                    <input type="text" id="skills" name="skill2">
-                    <input type="text" id="skills" name="skill3">
-                    <input type="text" id="skills" name="skill4">
-                    <input type="text" id="skills" name="skill5">
+                <div id="skillsContainer">
+                    <input type="text" name="skills[]">
                 </div>
+                <button type="button" onclick="addSkill()">Add Skill</button>
             </div>
 
-                <!-- =====================EDUCATION SECTION ================== -->
-
-                 <!-- -----EDUCATION 1----- -->
-                <div class="form-group">
-                    <label for="education1">Education 1:</label>
-                </div>
-                <div class="ed">
-                    <div class="form-group">
-                        <label for="degree1">Degree :</label>
-                        <input type="text" id="degree1" name="degree1">
-                    </div>
-                    <div class="form-group">
-                        <label for="college1">College :</label>
-                        <input type="text" id="college1" name="college1">
-                    </div>
-                    <div class="form-group">
-                        <label for="year1">Year :</label>
-                        <input type="text" id="year1" name="year1">
-                    </div>
-                </div>
-
-                    <!-- -----EDUCATION 2----- -->
-                <div class="form-group">
-                    <label for="education1">Education 2:</label>
-                </div>
-                <div class="ed">
+            <div id="educationContainer">
+                <h2>Education</h2>
+                <div class="dynamic-section">
+                    <h3>Education 1</h3>
                     <div class="form-group">
                         <label for="degree1">Degree:</label>
-                        <input type="text" id="degree1" name="degree2">
+                        <input type="text" name="degree[]">
                     </div>
                     <div class="form-group">
                         <label for="college1">College:</label>
-                        <input type="text" id="college1" name="college2">
+                        <input type="text" name="college[]">
                     </div>
                     <div class="form-group">
                         <label for="year1">Year:</label>
-                        <input type="text" id="year1" name="year2">
+                        <input type="text" name="year[]">
                     </div>
                 </div>
-
-                    <!-- -----EDUCATION 3----- -->
-                <div class="form-group">
-                    <label for="education1">Education 3:</label>
-                </div>
-                <div class="ed">
-                    <div class="form-group">
-                        <label for="degree1">Degree:</label>
-                        <input type="text" id="degree1" name="degree3">
-                    </div>
-                    <div class="form-group">
-                        <label for="college1">College:</label>
-                        <input type="text" id="college1" name="college3">
-                    </div>
-                    <div class="form-group">
-                        <label for="year1">Year:</label>
-                        <input type="text" id="year1" name="year3">
-                    </div>
-                </div>
-
-                <!-- ================LANGUAGAES======================= -->
-
-                <div class="form-group ">
-                    <label for="skills">Languages :</label>
-                    <div class="om">
-                        <input type="text" id="skills" name="lang1">
-                        <input type="text" id="skills" name="lang2">
-                        <input type="text" id="skills" name="lang3">
-                    </div>
-                </div>
-
-                <!-- =====================PROJECT SECTION=================== -->
-
-                <!-- PROJECT 1 -->
-
-                <div class="form-group">
-                    <label for="experience1">Project 1 :</label>
-                </div>
-                <div class="com">
-                    <div class="form-group ">
-                        <label for="company1">Project Title :</label>
-                        <input type="text" id="company1" name="project1">
-                    </div>
-                    <div class="form-group">
-                        <label for="post1">Duration :</label>
-                        <input type="text" id="post1" name="durat1">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="description1">Description :</label>
-                    <input type="text" id="duration1" name="desc1">
-                </div>
-
-                <!-- PROJECT 2 -->
-
-                <div class="form-group">
-                    <label for="experience1">Project 2 :</label>
-                    
-                </div>
-                <div class="com">
-                    <div class="form-group ">
-                        <label for="company1">Project Title :</label>
-                        <input type="text" id="company1" name="project2">
-                    </div>
-                    <div class="form-group">
-                        <label for="post1">Duration :</label>
-                        <input type="text" id="post1" name="durat2">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="description1">Description :</label>
-                    <input type="text" id="duration1" name="desc2">
-                </div>
-
-                <!-- =======================EXPERICNECE SECTION===================== -->
-                <div class="form-group">
-                    <label for="experience1">Experience 1:</label>
-                </div>
-                <div class="com">
-                    <div class="form-group ">
-                        <label for="company1">Company Name :</label>
-                        <input type="text" id="company1" name="company1">
-                    </div>
-                    <div class="form-group">
-                        <label for="post1">Post :</label>
-                        <input type="text" id="post1" name="post1">
-                    </div>
-                    <div class="form-group">
-                        <label for="duration1">Duration :</label>
-                        <input type="text" id="duration1" name="duration1">
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <label for="description1">Description :</label>
-                    <div class="op">
-                        <input type="text" id="duration1" name="lin11">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="experience1">Experience 2:</label>
-                </div>
-                <div class="com">
-                    <div class="form-group ">
-                        <label for="company1">Company Name :</label>
-                        <input type="text" id="company1" name="company2">
-                    </div>
-                    <div class="form-group">
-                        <label for="post1">Post :</label>
-                        <input type="text" id="post1" name="post2">
-                    </div>
-                    <div class="form-group">
-                        <label for="duration1">Duration :</label>
-                        <input type="text" id="duration1" name="duration2">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="description1">Description :</label>
-                    <input type="text" id="duration1" name="lin21">
-                </div>
-
-                <!-- ==========================ACHIEVEMENT================= -->
-
-                <div class="form-group">
-                    <label for="experience1">Achievement :</label>
-                </div>
-                <div class="form-group ">
-                    <label for="company1">First :</label>
-                    <input type="text" id="company1" name="ach1">
-                </div>
-                <div class="form-group">
-                    <label for="post1">Second :</label>
-                    <input type="text" id="post1" name="ach2">
-                </div>
-                <div class="form-group">
-                    <label for="duration1">Third :</label>
-                    <input type="text" id="duration1" name="ach3">
-                </div>
-                <button type="submit" class=" btn1 ">Submit</button>
+                <button type="button" onclick="addEducation()">Add Education</button>
             </div>
+
+            <div id="projectContainer">
+                <h2>Projects</h2>
+                <div class="dynamic-section">
+                    <h3>Project 1</h3>
+                    <div class="form-group">
+                        <label for="projectTitle1">Project Title:</label>
+                        <input type="text" name="project[]">
+                    </div>
+                    <div class="form-group">
+                        <label for="projectDuration1">Duration:</label>
+                        <input type="text" name="duration[]">
+                    </div>
+                </div>
+                <button type="button" onclick="addProject()">Add Project</button>
+            </div>
+
+            <div id="experienceContainer">
+                <h2>Experience</h2>
+                <div class="dynamic-section">
+                    <h3>Experience 1</h3>
+                    <div class="form-group">
+                        <label for="company1">Company Name:</label>
+                        <input type="text" name="company[]">
+                    </div>
+                    <div class="form-group">
+                        <label for="post1">Post:</label>
+                        <input type="text" name="post[]">
+                    </div>
+                    <div class="form-group">
+                        <label for="duration1">Duration:</label>
+                        <input type="text" name="experienceDuration[]">
+                    </div>
+                </div>
+                <button type="button" onclick="addExperience()">Add Experience</button>
+            </div>
+
+            <div class="form-group">
+                <label for="achievements">Achievements:</label>
+                <input type="text" name="achievements[]">
+                <button type="button" onclick="addAchievement()">Add Achievement</button>
+            </div>
+
+            <button type="submit" class="btn1">Submit</button>
+        </div>
     </form>
+
+    <script>
+        function addSkill() {
+            const skillsContainer = document.getElementById('skillsContainer');
+            const newSkillInput = document.createElement('input');
+            newSkillInput.type = 'text';
+            newSkillInput.name = 'skills[]';
+            skillsContainer.appendChild(newSkillInput);
+        }
+
+        function addEducation() {
+            const educationContainer = document.getElementById('educationContainer');
+            const newEducationDiv = document.createElement('div');
+            newEducationDiv.className = 'dynamic-section';
+            newEducationDiv.innerHTML = `
+                <h3>Education ${educationContainer.children.length}</h3>
+                <div class="form-group">
+                    <label for="degree">Degree:</label>
+                    <input type="text" name="degree[]">
+                </div>
+                <div class="form-group">
+                    <label for="college">College:</label>
+                    <input type="text" name="college[]">
+                </div>
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <input type="text" name="year[]">
+                </div>
+            `;
+            educationContainer.appendChild(newEducationDiv);
+        }
+
+        function addProject() {
+            const projectContainer = document.getElementById('projectContainer');
+            const newProjectDiv = document.createElement('div');
+            newProjectDiv.className = 'dynamic-section';
+            newProjectDiv.innerHTML = `
+                <h3>Project ${projectContainer.children.length}</h3>
+                <div class="form-group">
+                    <label for="projectTitle">Project Title:</label>
+                    <input type="text" name="project[]">
+                </div>
+                <div class="form-group">
+                    <label for="projectDuration">Duration:</label>
+                    <input type="text" name="duration[]">
+                </div>
+            `;
+            projectContainer.appendChild(newProjectDiv);
+        }
+
+        function addExperience() {
+            const experienceContainer = document.getElementById('experienceContainer');
+            const newExperienceDiv = document.createElement('div');
+            newExperienceDiv.className = 'dynamic-section';
+            newExperienceDiv.innerHTML = `
+                <h3>Experience ${experienceContainer.children.length}</h3>
+                <div class="form-group">
+                    <label for="company">Company Name:</label>
+                    <input type="text" name="company[]">
+                </div>
+                <div class="form-group">
+                    <label for="post">Post:</label>
+                    <input type="text" name="post[]">
+                </div>
+                <div class="form-group">
+                    <label for="experienceDuration">Duration:</label>
+                    <input type="text" name="experienceDuration[]">
+                </div>
+            `;
+            experienceContainer.appendChild(newExperienceDiv);
+        }
+
+        function addAchievement() {
+            const achievementsInput = document.createElement('input');
+            achievementsInput.type = 'text';
+            achievementsInput.name = 'achievements[]';
+            document.querySelector('[name="achievements[]"]').parentNode.appendChild(achievementsInput);
+        }
+    </script>
 </body>
 
 </html>
